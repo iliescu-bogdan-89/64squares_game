@@ -1,0 +1,62 @@
+<html>
+<script src="hello.min.js"></script>
+<button onclick="facebookLogin()">login with facebook</button>
+<button onclick="facebookLogOut()">logout facebook</button>
+<button onclick="isLoggedIn()">isLoggedIn</button>
+<label id ="facebook"></label>
+<script>
+    function img_xhr(img, url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'blob';
+        xhr.onload = function(e) {
+            img.src = window.URL.createObjectURL(this.response);
+        };
+        xhr.send();
+    }
+    function facebookLogin(){
+    console.log('facebookLogin_StepIn'); 
+    hello.init({
+    facebook:'1590058307973098'
+    });
+    hello('facebook').login({
+        force: false,
+        display:'popup',
+        //response_type: 'code',
+        scope: 'email , friends, photos, publish'
+    },
+    function(response) {
+        //window.location.href ="index.html";
+        console.log(response);
+        hello( response.network ).api( '/me' ).then( function(p) {
+            
+            var label = document.getElementById(response.network);
+            console.log(p);
+            label.innerHTML = "<img src='"+ p.thumbnail + "' width=24/>Connected to "+ response.network+" as " + p.name + ' with the  email ' + p.email;
+
+            // On chrome apps we're not able to get remote images
+            // This is a workaround
+            if (typeof(chrome) === 'object') {
+                img_xhr(label.getElementsByTagName('img')[0], p.thumbnail);
+            }
+        });
+    });
+    
+    console.log('facebookLogin_StepOut'); 
+}
+function isLoggedIn(){
+    console.log(hello('facebook').getAuthResponse()===null?false:true);
+    return hello('facebook').getAuthResponse()===null?false:true;
+
+}
+function facebookLogOut(){
+    hello('facebook').logout().then(function() {
+        alert('Signed out');
+    }, function(e) {
+        alert('Signed out error: ' + e.error.message);
+    });
+}
+
+</script>
+
+</html>

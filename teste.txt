@@ -1,0 +1,13 @@
+createRow   tested
+getDiviID    tested
+createonediv   tested
+createtable   tested
+changecol      --
+removeletter  --
+changecellcol --
+setletter   tested
+createMatrix   tested
+rotateMatrixLeft --
+tstmatrices --
+letterSimetry--
+

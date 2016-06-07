@@ -1,0 +1,122 @@
+<html>
+<head>
+  <script src="HTMLGenerator.js"></script>
+<style type="text/css">
+
+#myP {
+    margin-left:60px;
+    
+    padding:0px;
+    border: 5px solid transparent;
+   border-color: black;
+   border-radius: 5px;
+   width: 496px;
+}
+#myButtons
+{
+    margin-left: 80px;
+}
+.rows { 
+       
+       height: 60;
+       margin: 0;
+       padding: 0;
+     }
+.rows div { display: inline-block;
+		   border-style: solid;
+           border-color: black;
+           border-width: 1px;
+           border-radius: 3px;
+           height: 40;
+           padding-top: 18;
+           width: 60;
+           margin: 0;
+           text-align: center;
+           vertical-align: middle;
+           font-size: 25;
+           font-weight: bold;
+           text-shadow:2px 2px gray;
+
+          }
+   #swatch {
+      height: 60;
+      width: 60;
+      border-style: solid;
+      border-width: 2px;
+      border-color: black;
+      display: -webkit-inline-box;
+  }
+ 
+  #btn1 {background-color: blue}
+  #btn2 {background-color: red}
+  #btn3 {background-color: yellow}
+  #btn4 {background-color: green}
+</style>
+</head>
+
+<body>
+  
+  <script type="text/javascript">
+  
+  document.addEventListener("DOMContentLoaded", function(event) {
+    document.getElementById("myP").innerHTML =createTable('rows',8,'');
+    setLetter('A',0,0);
+    setLetter('A',0,7);
+    setLetter('A',7,0);
+    setLetter('A',7,7);
+    setLetter('B',0,1);
+    setLetter('B',0,6);
+    setLetter('B',4,6);
+    setLetter('B',6,0);
+    setLetter('C',3,3);
+    setLetter('C',4,3);
+    setLetter('C',4,4);
+    setLetter('C',4,5);
+    setLetter('D',0,3);
+    setLetter('D',1,6);
+    setLetter('D',3,2);
+    setLetter('D',5,0);
+    setLetter('E',2,1);
+    setLetter('E',3,1);
+    setLetter('E',7,4);
+    setLetter('E',7,5);
+    returnOldState();
+    
+    
+  });
+  
+  </script>
+
+
+ 
+<p id='myP'></p>
+
+<div id='myButtons'>
+<button id='btn1' type="button" onclick="applyNewColor('blue')">blue</button>
+<button id='btn2' type="button" onclick="applyNewColor('red')">red</button>
+<button id='btn3' type="button" onclick="applyNewColor('yellow')">yellow</button>
+<button id='btn4' type="button" onclick="applyNewColor('green')">green</button>
+<button id='btn5' type="button" onclick="applyNewColor('white')">clear</button>
+<button id='btn-test' onclick='megaTest()'>TEST&SAVE</button>
+<dp id='swatch'>Current Color</p>
+</div>
+
+
+
+
+
+</body>
+<script src="hello.min.js"></script>
+<script>
+    function isLoggedIn(){
+    console.log(hello('facebook').getAuthResponse()===null?false:true);
+    return hello('facebook').getAuthResponse()===null?false:true;
+    };
+    if (isLoggedIn()!==true) {
+        console.log('in if');
+        document.body.innerHTML = "Please Login";
+        console.log('out of if');  }                      
+</script>
+  
+ 
+</html>

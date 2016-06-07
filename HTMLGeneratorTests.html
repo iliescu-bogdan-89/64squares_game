@@ -1,0 +1,106 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>QUnit Example</title>
+  <link rel="stylesheet" href="qunit-1.23.0.css">
+</head>
+<body >
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <script src="qunit-1.23.0.js"></script>
+  <script src="HTMLGenerator.js"></script>
+  <script > 
+      
+  QUnit.test( "getDivId8_3", function( assert ) {
+  	var id= getDivId(8,3);
+  	var expectedId = "divIDRow8Col3";
+	  assert.ok( id == expectedId, "getDivId didn't return the expected value, which is:" +expectedId + ". It returned:" + id);
+	});
+  QUnit.test( "getDivId2_10", function( assert ) {
+  	var id= getDivId(2,10);
+  	var expectedId = "divIDRow2Col10";
+	  assert.ok( id == expectedId, "getDivId didn't return the expected value, which is:" +expectedId + ". It returned:" + id);
+	});
+  QUnit.test( "createOneDiv counter is 3", function( assert ) {
+  	var curentResult= createOneDiv("myClass","",3,2);
+  	var expected = "<div onclick='changeCellCol("+'"divIDRow3Col2")'+"'"+" id='divIDRow3Col2' class='myClass'></div>";
+	  assert.ok( curentResult == expected, "createOneDiv didn't return the expected value, which is:" +expected + ". It returned:" + curentResult);
+	});
+  QUnit.test( "createOneDiv  counter is 8", function( assert ) {
+  	var curentResult= createOneDiv("myClass","",8,3);
+  	var expected = "<div onclick='changeCellCol("+'"divIDRow8Col3")'+"'"+" id='divIDRow8Col3' class='myClass'></div>";;
+	  assert.ok( curentResult == expected, "createOneDiv didn't return the expected value, which is:" +expected + ". It returned:" + curentResult);
+	});
+  QUnit.test("createRow " , function(assert) {
+    var currentResult=createRow('',5,2,'ChooChoo');
+    var expected ="<div onclick='changeCellCol("+ '"divIDRow5Col0")'+"'"+" id='divIDRow5Col0' class=''>ChooChoo</div><div onclick='changeCellCol("+ '"divIDRow5Col1")'+"' id='divIDRow5Col1' class=''>ChooChoo</div>";
+    assert.ok(currentResult==expected , 'for createRow(5,2,"ChooChoo") it returned ' + currentResult + ' should have ' + expected)
+    currentResult=createRow('',15,2,'ALTE');
+    expected = "<div onclick='changeCellCol("+ '"divIDRow15Col0")'+"'"+" id='divIDRow15Col0' class=''>ALTE</div><div onclick='changeCellCol("+ '"divIDRow15Col1")'+"' id='divIDRow15Col1' class=''>ALTE</div>";
+    assert.ok(currentResult==expected , 'for createRow(15,2,"ALTE") it returned ' + currentResult + ' should have ' + expected)
+    })
+  QUnit.test("createTable " , function(assert){
+    var currTable=createTable('myClass', 2 , 'Jean');
+    var expectedTable="<div class='myClass'><div onclick='changeCellCol("+   '"divIDRow0Col0")'  +"' id='divIDRow0Col0' class='myClass'>Jean</div><div onclick='changeCellCol("+ '"divIDRow0Col1")'+ "' id='divIDRow0Col1' class='myClass'>Jean</div></div><div "+ "class='myClass'><div onclick='changeCellCol("+ '"divIDRow1Col0")'+ "' id='divIDRow1Col0' class='myClass'>Jean</div><div onclick='changeCellCol("+ '"divIDRow1Col1")'+"' id='divIDRow1Col1' class='myClass'>Jean</div></div>";
+    assert.ok(currTable==expectedTable , "createTable('myClass', 2 , 'Jean') returned " + currTable+ '\n should have ' + expectedTable)
+        });
+QUnit.test("testSetLetter" , function(assert){
+    var column=2;
+    var row=3;
+    var letter="A";
+    
+    var f = document.getElementById;
+    
+    document.getElementById=  function (id){
+                var newElement = document.createElement("DIV");
+                newElement.id=id;
+                return newElement;
+                
+            };
+    var element = setLetter(letter,row,column);
+    document.getElementById=f;
+    var expectedOuterHTML = '<div id="divIDRow3Col2">A</div>' ;
+    assert.ok(expectedOuterHTML==element.outerHTML );
+});
+QUnit.test("createMatrix de size 3" , function(assert){
+    var result=createMatrix(3);
+    var expected=[[0,0,0],[0,0,0],[0,0,0]];
+    assert.ok(testMatrices(result,expected,3) , 'our result is ' + result + ' \n should have been ' + expected)
+    
+});
+/* QUnit.test("changeCol test 	" , function(assert){
+    var currentCol='red';
+    (function (){var element=document.createElement('P');
+                element.id='swatch'
+                element.style.backgroundColor='red';
+                console.log(element);
+                
+            })();
+   
+   var result=document.getElementById('swatch').outerHTML;
+   console.log(result);
+   var expected='<p id="swatch" style="background-color: blue;"></p>';  
+   assert.ok(result==expected && currentCol=='blue' , 'expected is ' +expected + ' \n result is  '+result);
+}); */
+QUnit.test("applyNewColor test" , function(assert){
+    var oldFunction = document.getElementById;
+    document.getElementById = function(id){
+        var newElement =  document.createElement("p");
+        newElement.id=id;
+        console.log(newElement);
+        newElement.style.backgroundColor = "white";
+        console.log(newElement);
+        return newElement;
+    };
+    var htmlElement = applyNewColor("blue");
+    document.getElementById = oldFunction;
+    var expected='<p id="swatch" style="background-color: blue;"></p>';  
+   assert.ok(htmlElement.outerHTML==expected && _currentColor=='blue' , 'expected is ' +expected + ' \n result is  '+htmlElement.outerHTML);
+    
+});
+
+  	
+  </script>
+</body>
+</html>
